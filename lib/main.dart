@@ -38,16 +38,16 @@ class _HomePageState extends State<HomePage> {
   updateRow(String word) {
     word = word.toLowerCase();
     if (!WORD_LIST.contains(word)) {
-      print('Word not in list');
+      _alert('Word not in list');
       return;
     }
     if (word == TODAYS_WORD) {
-      print('Impressive!');
+      _alert('Impressive!');
       setState(() {
         _rowDisabled[_currentIndex] = true;
       });
     } else {
-      print('nope not it. try again');
+      _alert('nope not it. try again');
       setState(() {
         // Disable the current one
         _rowDisabled[_currentIndex] = true;
@@ -64,7 +64,27 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Wordle Clone'),
       ),
-      body: Column(children: [for (int i = 0; i < LETTER_COUNT; i++) LetterRow(_rowDisabled[i], updateRow)]),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 100),
+        child: Column(children: [
+          for (int i = 0; i < LETTER_COUNT; i++)
+            Center(
+              //color: Colors.red,
+              child: LetterRow(_rowDisabled[i], updateRow),
+            )
+        ]),
+      ),
+    );
+  }
+
+  _alert(String message) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(message),
+        );
+      },
     );
   }
 }

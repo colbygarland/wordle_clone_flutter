@@ -21,36 +21,38 @@ class _LetterRowState extends State<LetterRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Stack(
-      children: [
-        for (var i = 0; i < LETTER_COUNT; i++)
-          Positioned(
-              left: (12 + (i * 80)).toDouble(),
-              top: 5,
-              child: Container(
-                height: 62,
-                width: 62,
-                decoration: BoxDecoration(border: Border.all(width: 3, color: Colors.grey)),
-              )),
-        TextField(
-          readOnly: widget.disabled,
-          style: const TextStyle(fontSize: 50, letterSpacing: 50, fontFeatures: [FontFeature.tabularFigures()]),
-          inputFormatters: [_UpperCaseTextFormatter()],
-          //textAlign: TextAlign.center,
-          onChanged: (value) => setState(() {
-            word = value;
-          }),
-          onSubmitted: (value) => widget.onEnterCallback(value),
-          maxLength: LETTER_COUNT,
-          showCursor: false,
-          decoration: const InputDecoration(
-            counterText: "",
-            border: InputBorder.none,
+    return SizedBox(
+      width: 420,
+      child: Stack(
+        children: [
+          for (var i = 0; i < LETTER_COUNT; i++)
+            Positioned(
+                left: (12 + (i * 80)).toDouble(),
+                top: 5,
+                child: Container(
+                  height: 62,
+                  width: 62,
+                  decoration: BoxDecoration(border: Border.all(width: 3, color: Colors.grey)),
+                )),
+          TextField(
+            readOnly: widget.disabled,
+            style: const TextStyle(fontSize: 50, letterSpacing: 50, fontFeatures: [FontFeature.tabularFigures()]),
+            inputFormatters: [_UpperCaseTextFormatter()],
+            //textAlign: TextAlign.center,
+            onChanged: (value) => setState(() {
+              word = value;
+            }),
+            onSubmitted: (value) => widget.onEnterCallback(value),
+            maxLength: LETTER_COUNT,
+            showCursor: false,
+            decoration: const InputDecoration(
+              counterText: "",
+              border: InputBorder.none,
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 }
 
