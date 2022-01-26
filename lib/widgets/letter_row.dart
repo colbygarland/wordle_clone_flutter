@@ -3,11 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// ignore: constant_identifier_names
-const LETTER_COUNT = 5;
+import '../main.dart';
 
+// ignore: must_be_immutable
 class LetterRow extends StatefulWidget {
-  const LetterRow({Key? key}) : super(key: key);
+  LetterRow(this.disabled, this.onEnterCallback, {Key? key}) : super(key: key);
+  bool disabled;
+  Function(String) onEnterCallback;
 
   @override
   State<LetterRow> createState() => _LetterRowState();
@@ -32,12 +34,14 @@ class _LetterRowState extends State<LetterRow> {
                 decoration: BoxDecoration(border: Border.all(width: 3, color: Colors.grey)),
               )),
         TextField(
+          readOnly: widget.disabled,
           style: const TextStyle(fontSize: 50, letterSpacing: 50, fontFeatures: [FontFeature.tabularFigures()]),
           inputFormatters: [_UpperCaseTextFormatter()],
           //textAlign: TextAlign.center,
           onChanged: (value) => setState(() {
             word = value;
           }),
+          onSubmitted: (value) => widget.onEnterCallback(value),
           maxLength: LETTER_COUNT,
           showCursor: false,
           decoration: const InputDecoration(
